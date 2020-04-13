@@ -4,7 +4,7 @@ pr3_0:-read(N),write(N).
 pr3_1:-read(N),r_list(A,N),w_list(A).
 r_list(A,N):-r_list(A,N,0,[]).
 r_list(A,N,N,A):-!.
-r_list(A,N,I,B):- I1 is I+1, read(X),append(B,[X],B1),r_list(A,N,I1,B1).
+r_list(A,N,I,B):-I1 is I+1, read(X),append(B,[X],B1),r_list(A,N,I1,B1).
 w_list([]):-!.
 w_list([H|T]):-write(H),nl,w_list(T).
 % Сумма списка
@@ -20,3 +20,21 @@ zc([_|T],I,K,Z):-K1 is K+1, zc(T,I,K1,Z).
 %Отзеркаливание списка
 p([],B,B):-!.
 p([H|T],B,C):-append(B,[H],B1),p(T,B1,C).
+%Минимальный элемент списка
+min:-read(N), r_list(A,N),min_1(A,Z),write(Z).
+min_1([H|T],Z):-minim(T,Z,H).
+minim([],Z,Z):-!.
+minim([H|T],Z,M):-(M<H),minim(T,Z,M),!.
+minim([H|T],Z,_):-minim(T,Z,H).
+%Возвращает true если элемент есть в списке.
+vozvr:-read(N),read(Z),r_list(A,N),vozvr1(A,Z).
+vozvr1([H|_],H):-true,!.
+vozvr1([],_):-false,!.
+vozvr1([_|T],Z):-vozvr1(T,Z).
+%Удаление элемента по номеру
+%delete:-read(N),r_list(A,N),read(I), del(A,I,Z),w_list(Z).
+%del(A,I,Z):-del(A,I,1,Z).
+%del([],_,_,[_]):-fail.
+%del([_|[]],I,I,[_]):-!.
+%del([_|T],I,I,[Z]):-append(Z,T),!.
+%del([H|T],I,K,[Z]):-append(Z,[H],Z1),K1 is K+1,del(T,I,K1,Z1).
