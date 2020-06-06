@@ -20,7 +20,7 @@ el_no([H|_],I,I,H):-!.
 el_no([_|T],I,K,X):-K1 is K+1,el_no(T,I,K1,X).
 /*список элементов по списку номеров*/
 list_el_no(_,[],Res,Res):-!.
-list_el_no(List,Ti,Res,R):-el_no(List,Hi,X),append(R,[X],R1),list_el_no(List,Ti,Res,R1).
+list_el_no(List,[Hi|Ti],Res,R):-el_no(List,Hi,X),append(R,[X],R1),list_el_no(List,Ti,Res,R1).
 
 /*Максимум в списке*/
 max([H|T], M):-max(T, M, H).
@@ -44,7 +44,7 @@ delete_el([H|T],H,New,L):-delete_el(T,H,New,L).
 delete_el([H|T],El,New,L):-append(L,[H],L1),delete_el(T,El,New,L1).
 
 equal([H|T]):-equal(H,T).
-equal(El,_):-!.
+equal(El,[El|_]):-!.
 equal(El,[H|T]):-equal(El,T).
 /*получить список повторяющихся длин*/
 repeating_el([],Rep,Rep):-!.
